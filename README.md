@@ -71,7 +71,7 @@ This Test Will Pass
 This Test Will Fail
     Log   ${ERROR}
 ```    
-
+![slack-notifications](https://user-images.githubusercontent.com/30321659/67525403-f0701680-f6b2-11e9-8e53-7ced5ff7aff6.png)
 The above example shows how the ``Post Message To Channel`` can be used in Robot Framework.
 
 You can for example use the keyword in a test teardown to post a message if the test failed containing the test name and error message.
