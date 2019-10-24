@@ -17,8 +17,6 @@ Import Library
 
 To use RobotNotifications in Robot Framework, the library needs to be imported using the ``Library`` setting as any other library. The library needs the webhook url from Slack or Mattermost as an argument.
 
-.. code:: robotframework
-
     *** Settings ***
     Library         RobotNotifications   https://hooks.slack.com/services/--your-webhook--
 
@@ -50,9 +48,6 @@ This keyword has one mandatory argument which is the message to post to the chan
 
 Example
 -----
-
-.. code:: robotframework
-
     *** Settings ***
     Library         RobotNotifications   https://hooks.slack.com/services/--your-webhook--
     Suite Setup     Start Suite
