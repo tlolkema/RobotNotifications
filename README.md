@@ -2,6 +2,7 @@ RobotNotifications
 ===============
 
 Send notifications to Slack or Mattermost using Robot Framework.
+Needs at least Python 3.6 to work.
 
 Installation
 ------------
@@ -24,7 +25,7 @@ You can retrieve this webhook url in Slack or Mattermost.
 
 Slack
 
-> https://github.com/xyb/robotframework-debuglibrary/
+> https://slack.com/intl/en-lv/help/articles/115005265063-incoming-webhooks-for-slack
 
 Mattermost
 
@@ -48,6 +49,7 @@ This keyword has one mandatory argument which is the message to post to the chan
 
 Example
 -----
+
     *** Settings ***
     Library         RobotNotifications   https://hooks.slack.com/services/--your-webhook--
     Suite Setup     Start Suite
