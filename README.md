@@ -17,10 +17,10 @@ Import Library
 -----
 
 To use RobotNotifications in Robot Framework, the library needs to be imported using the ``Library`` setting as any other library. The library needs the webhook url from Slack or Mattermost as an argument.
-
-    *** Settings ***
-    Library         RobotNotifications   https://hooks.slack.com/services/--your-webhook--
-
+```robotframework
+*** Settings ***
+Library         RobotNotifications   https://hooks.slack.com/services/--your-webhook--
+```
 You can retrieve this webhook url in Slack or Mattermost.
 
 Slack
@@ -49,28 +49,28 @@ This keyword has one mandatory argument which is the message to post to the chan
 
 Example
 -----
-
-    *** Settings ***
-    Library         RobotNotifications   https://hooks.slack.com/services/--your-webhook--
-    Suite Setup     Start Suite
-    Test Teardown   Message On Failure     
+```robotframework
+*** Settings ***
+Library         RobotNotifications   https://hooks.slack.com/services/--your-webhook--
+Suite Setup     Start Suite
+Test Teardown   Message On Failure     
     
-    *** Keywords ***
-    Start Suite
-        Post Message To Channel      Testing has started!    icon_emoji=robot_face    username=Robot    
-        ...                          channel=robot-notifications
+*** Keywords ***
+Start Suite
+    Post Message To Channel      Testing has started!    icon_emoji=robot_face    username=Robot    
+    ...                          channel=robot-notifications
     
-    Message On Failure
-        Run Keyword If Test Failed   Post Message To Channel   ${TEST_NAME}\n${TEST_MESSAGE}   
-        ...                          icon_emoji=rage   username=Robot Error   channel=robot-notifications
+Message On Failure
+    Run Keyword If Test Failed   Post Message To Channel   ${TEST_NAME}\n${TEST_MESSAGE}   
+    ...                          icon_emoji=rage   username=Robot Error   channel=robot-notifications
     
-    *** Test Cases ***
-    This Test Will Pass
-        Log   This Test Will Pass
+*** Test Cases ***
+This Test Will Pass
+    Log   This Test Will Pass
     
-    This Test Will Fail
-        Log   ${ERROR}
-    
+This Test Will Fail
+    Log   ${ERROR}
+```    
 
 The above example shows how the ``Post Message To Channel`` can be used in Robot Framework.
 
