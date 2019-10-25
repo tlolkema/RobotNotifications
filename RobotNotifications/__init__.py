@@ -1,18 +1,13 @@
 '''
 POST a message to a Slack or Mattermost channel trough Robot Framework.
 
-Needs at least Python 3.6 to work.
-
 Dependency is requests.
 '''
-import argparse
+
 import json
 
 import requests
 from requests.exceptions import HTTPError
-
-__version__ = '1.0.2'
-__author__ = "Tim Lolkema"
 
 
 class RobotNotifications:
@@ -27,11 +22,10 @@ class RobotNotifications:
     *** Keywords ***
     Keyword
        Post Message To Channel   Message
-
     '''
-
+    
     ROBOT_LIBRARY_SCOPE = 'TEST CASE'
-    ROBOT_LIBRARY_VERSION = __version__
+    ROBOT_LIBRARY_VERSION = '1.0.3'
 
     def __init__(self, webhook):
         self.webhook = webhook
