@@ -2,7 +2,6 @@ RobotNotifications
 ===============
 
 Send notifications to Slack or Mattermost using Robot Framework.
-Needs at least Python 3.6 to work.
 
 Installation
 ------------
