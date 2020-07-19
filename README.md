@@ -15,8 +15,20 @@ Running this command installs also the latest version of Requests
 
 ## Use as listener
 
-robot --listener "RobotNotifications;https://webhook_url;end_suite=True;end_test=True" test.robot
+```robot --listener "RobotNotifications;https://webhook_url;end_suite=True;end_test=True" test.robot```
 
+Listeners are taken into use from the command line with the --listener option.
+
+- The first argument is the name of the library.
+- The second argument is the webhook url.
+- Optional arguments are end_suite & end_test
+
+Seperate the argumnet with a semicolon ;
+
+## end_suite & end_test
+
+- end_suite will post a summary of the results per suite
+- end_test will post failing tests with the name of the test and the error message
 
 ## Use as library
 
@@ -57,34 +69,13 @@ Example:
 ```robotframework
 *** Settings ***
 Library         RobotNotifications   https://hooks.slack.com/services/--your-webhook--
-Suite Setup     Start Suite
-Test Teardown   Message On Failure     
-    
-*** Keywords ***
-Start Suite
-    Post Message To Channel      Testing has started!    icon_emoji=robot_face    username=Robot    
-    ...                          channel=robot-notifications
-    
-Message On Failure
-    Run Keyword If Test Failed   Post Message To Channel   ${TEST_NAME}\n${TEST_MESSAGE}   
-    ...                          icon_emoji=rage   username=Robot Error   channel=robot-notifications
-    
+      
 *** Test Cases ***
-This Test Will Pass
-    Log   This Test Will Pass
-    
-This Test Will Fail
-    Log   ${ERROR}
+Example Test
+    Post Message To Channel      This is a custom message!    icon_emoji=robot_face    username=Robot    
+    ...                          channel=robot-notifications
 ```    
-![slack-notifications](https://user-images.githubusercontent.com/30321659/67525403-f0701680-f6b2-11e9-8e53-7ced5ff7aff6.png)
 The above example shows how the ``Post Message To Channel`` can be used in Robot Framework.
-
-You can for example use the keyword in a test teardown to post a message if the test failed containing the test name and error message.
-
-Automatic variables
-
->  https://github.com/robotframework/robotframework/blob/master/doc/userguide/src/CreatingTestData/Variables.rst#automatic-variables
-
 
 ## Retrieve webhook
 
