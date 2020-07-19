@@ -23,7 +23,7 @@ Listeners are taken into use from the command line with the --listener option.
 - The second argument is the webhook url.
 - Optional arguments are end_suite & end_test
 
-Seperate the argumnet with a semicolon ;
+Seperate the arguments with a semicolon ;
 
 ## end_suite & end_test
 
