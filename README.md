@@ -1,10 +1,10 @@
-RobotNotifications
-===============
+# RobotNotifications
+
 
 Send notifications to Slack or Mattermost using Robot Framework.
+Can be used both as library or listener.
 
-Installation
-------------
+## Installation
 
 The recommended installation method is pip:
 
@@ -12,26 +12,33 @@ The recommended installation method is pip:
 
 Running this command installs also the latest version of Requests
 
-Import Library
------
+
+## Use as listener
+
+robot --listener "RobotNotifications;https://webhook_url;end_suite=True;end_test=True" test.robot
+
+
+## Use as library
+
+Besides the listener functionality this library allows you to post a custom message with the use of the keyword "Post Message To Channel"
 
 To use RobotNotifications in Robot Framework, the library needs to be imported using the ``Library`` setting as any other library. The library needs the webhook url from Slack or Mattermost as an argument.
+
+Example:
 ```robotframework
 *** Settings ***
 Library         RobotNotifications   https://hooks.slack.com/services/--your-webhook--
 ```
 You can retrieve this webhook url in Slack or Mattermost.
 
-Slack
+Example 2:
+```robotframework
+*** Settings ***
+Library         RobotNotifications   https://hooks.slack.com/services/--your-webhook--
+...             end_suite=True   end_test=True
+```
 
-> https://slack.com/intl/en-lv/help/articles/115005265063-incoming-webhooks-for-slack
-
-Mattermost
-
->  https://docs.mattermost.com/developer/webhooks-incoming.html#simple-incoming-webhook 
-
-Usage
------
+## Write a custom message
 
 After importing the library you have access to the keyword ``Post Message To Channel``
 
@@ -46,8 +53,7 @@ This keyword has one mandatory argument which is the message to post to the chan
 | icon_emoji | Overrides the profile picture and `icon_url` parameter. Defaults to none and is not set during webhook creation. | NO       |
 | props      | Sets the post `props`, a JSON property bag for storing extra or meta data on the post. | NO       |
 
-Example
------
+Example:
 ```robotframework
 *** Settings ***
 Library         RobotNotifications   https://hooks.slack.com/services/--your-webhook--
@@ -78,3 +84,14 @@ You can for example use the keyword in a test teardown to post a message if the 
 Automatic variables
 
 >  https://github.com/robotframework/robotframework/blob/master/doc/userguide/src/CreatingTestData/Variables.rst#automatic-variables
+
+
+## Retrieve webhook
+
+Slack
+
+> https://slack.com/intl/en-lv/help/articles/115005265063-incoming-webhooks-for-slack
+
+Mattermost
+
+>  https://docs.mattermost.com/developer/webhooks-incoming.html#simple-incoming-webhook 
