@@ -15,20 +15,22 @@ Running this command installs also the latest version of Requests
 
 ## Use as listener
 
-```robot --listener "RobotNotifications;https://webhook_url;end_suite=True;end_test=True" test.robot```
+```robot --listener "RobotNotifications;https://webhook_url;end_suite;end_test" test.robot```
 
 Listeners are taken into use from the command line with the --listener option.
 
 - The first argument is the name of the library.
 - The second argument is the webhook url.
-- Optional arguments are end_suite & end_test
 
 Seperate the arguments with a semicolon ;
 
-## end_suite & end_test
+## Arguments
 
-- end_suite will post a summary of the results per suite
-- end_test will post failing tests with the name of the test and the error message
+| Argument     	| Description        	| Example                                                                                                           	|
+|--------------	|--------------------	|-------------------------------------------------------------------------------------------------------------------	|
+| end_suite    	| Post suite results 	| **Suites.Suite 1**<br><br>3 critical tests, 2 passed, 1 failed<br><br>3 tests total, 2 passed, 1 failed               	|
+| end_test     	| Post failing tests 	| **Sample Testcase** (FAIL)<br><br>No keyword with name 'Log To C' found. Did you mean: <br><br>BuiltIn.Log To Console 	|
+| end_test_all 	| Post all tests     	| **Sample Testcase** (PASS)                                                                                            	|                                                                                	|
 
 ## Use as library
 
@@ -47,7 +49,7 @@ Example 2:
 ```robotframework
 *** Settings ***
 Library         RobotNotifications   https://hooks.slack.com/services/--your-webhook--
-...             end_suite=True   end_test=True
+...             end_suite   end_test
 ```
 
 ## Write a custom message
