@@ -15,7 +15,7 @@ class RobotNotifications:
     POST a message to a Slack or Mattermost channel.
     '''
     ROBOT_LIBRARY_SCOPE = 'GLOBAL'
-    ROBOT_LIBRARY_VERSION = '1.0.4'
+    ROBOT_LIBRARY_VERSION = '1.1.1'
     ROBOT_LISTENER_API_VERSION = 3
 
     def __init__(self, webhook, *args):       
@@ -56,14 +56,31 @@ class RobotNotifications:
     def end_suite(self, data, result):
         '''Post the suite results to Slack or Mattermost'''        
         if 'end_suite' in self.args:
-            suite_message = f'*{result.longname}*\n{result.full_message}'
+            suite_message = (
+                f'*{result.longname}*\n'
+                f'{result.full_message}'
+            )
             self.post_message_to_channel(suite_message, icon_emoji=':robot_face:')
+        
+        if 'summary' in self.args:
+            if not result.parent:
+                suite_message = (
+                    f'*Report Summary - {result.longname}* ({result.status})\n\n'
+                    f'*Total Tests : * {result.statistics.all.total}\n'
+                    f'*Total Passed : * {result.statistics.all.passed}\n'
+                    f'*Total Failed : * {result.statistics.all.failed}'
+                )
+                self.post_message_to_channel(suite_message, icon_emoji=':robot_face:')
 
     def end_test(self, data, result):
         '''Post individual test results to Slack or Mattermost'''
-        test_message = f'*{result.name}* ({result.status})\n{result.message}'
+        test_message = (
+            f'*{result.name}* ({result.status})\n'
+            f'{result.message}'
+        )
         if 'end_test' in self.args:
             if not result.passed:
                 self.post_message_to_channel(test_message, icon_emoji=':rage:')
+        
         if 'end_test_all' in self.args:
             self.post_message_to_channel(test_message, icon_emoji=':robot_face:')
