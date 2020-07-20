@@ -18,16 +18,16 @@ class RobotNotifications:
     ROBOT_LIBRARY_VERSION = '1.0.4'
     ROBOT_LISTENER_API_VERSION = 3
 
-    def __init__(self, webhook, end_suite=None, end_test=None):       
+    def __init__(self, webhook, *args):       
         self.webhook = webhook
-        self.end_suite_val = end_suite
-        self.end_test_val = end_test
+        self.args = args
         self.ROBOT_LIBRARY_LISTENER = self
 
     def _clean_data(self, text, data):
         '''Validates the given arguments and creates a JSON string'''
         allowed_params = ('channel', 'username', 'icon_url', 'icon_emoji', 'props')
-        json_data = {'text': text}
+        json_data = {}
+        json_data['text'] = text
         for key, value in data.items():
             if key in allowed_params:
                 json_data[key] = value
@@ -54,14 +54,16 @@ class RobotNotifications:
             print(response.text)
 
     def end_suite(self, data, result):
-        '''Post the suite results to Slack or Mattermost'''
-        if self.end_suite_val:
+        '''Post the suite results to Slack or Mattermost'''        
+        if 'end_suite' in self.args:
             suite_message = f'*{result.longname}*\n{result.full_message}'
-            self.post_message_to_channel(suite_message, icon_emoji='robot_face')
+            self.post_message_to_channel(suite_message, icon_emoji=':robot_face:')
 
     def end_test(self, data, result):
-        '''Post failing tests to Slack or Mattermost'''
-        if self.end_test_val:
+        '''Post individual test results to Slack or Mattermost'''
+        test_message = f'*{result.name}* ({result.status})\n{result.message}'
+        if 'end_test' in self.args:
             if not result.passed:
-                test_message = f'*{result.name}*\n{result.message}'
-                self.post_message_to_channel(test_message, icon_emoji='rage')
+                self.post_message_to_channel(test_message, icon_emoji=':rage:')
+        if 'end_test_all' in self.args:
+            self.post_message_to_channel(test_message, icon_emoji=':robot_face:')
