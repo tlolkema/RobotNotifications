@@ -15,16 +15,17 @@ Running this command installs also the latest version of Requests
 
 ## Use as listener
 
-```robot --listener "RobotNotifications;https://webhook_url;end_suite;end_test" test.robot```
+```robot --listener "RobotNotifications;https://webhook_url;end_test;summary" test.robot```
 
 Listeners are taken into use from the command line with the --listener option.
 
 - The first argument is the name of the library.
 - The second argument is the webhook url.
+- Based on your preferences pick the next argument(s) from the table 
 
 Seperate the arguments with a semicolon ;
 
-## Arguments
+## Optional Arguments
 
 | Argument     	| Description        	| Example                                                                                                           	|
 |--------------	|--------------------	|-------------------------------------------------------------------------------------------------------------------	|
