@@ -15,7 +15,7 @@ class RobotNotifications:
     POST a message to a Slack or Mattermost channel.
     '''
     ROBOT_LIBRARY_SCOPE = 'GLOBAL'
-    ROBOT_LIBRARY_VERSION = '1.1.2'
+    ROBOT_LIBRARY_VERSION = '1.1.3'
     ROBOT_LISTENER_API_VERSION = 3
 
     def __init__(self, webhook, *args):       
@@ -71,12 +71,13 @@ class RobotNotifications:
     def end_suite(self, data, result):
         '''Post the suite results to Slack or Mattermost'''        
         if 'end_suite' in self.args:
-            text = f'*{result.longname}*\n'
-            if result.status == 'PASS':
-                attachments_data = self._get_attachments('GREEN', result.full_message)
-            else:
-                attachments_data = self._get_attachments('RED', result.full_message)
-            self.post_message_to_channel(text, attachments=attachments_data)
+            if result.parent:
+                text = f'*{result.longname}*\n'
+                if result.status == 'PASS':
+                    attachments_data = self._get_attachments('GREEN', result.full_message)
+                else:
+                    attachments_data = self._get_attachments('RED', result.full_message)
+                self.post_message_to_channel(text, attachments=attachments_data)
         
         if 'summary' in self.args:
             if not result.parent:
