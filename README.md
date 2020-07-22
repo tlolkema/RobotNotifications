@@ -29,9 +29,10 @@ Seperate the arguments with a semicolon ;
 
 | Argument     	| Description        	| Example                                                                                                           	|
 |--------------	|--------------------	|-------------------------------------------------------------------------------------------------------------------	|
-| end_suite    	| Post suite results 	| **Suites.Suite 1**<br><br>3 critical tests, 2 passed, 1 failed<br><br>3 tests total, 2 passed, 1 failed               	|
-| end_test     	| Post failing tests 	| **Sample Testcase**<br><br>No keyword with name 'Log To C' found. Did you mean: <br><br>BuiltIn.Log To Console 	|
-| end_test_all 	| Post all tests     	| **Sample Testcase**                                                                                            	|                                                                                	|
+| end_suite    	| Post suite results 	| **Suites.Suite 1**<br>3 critical tests, 2 passed, 1 failed<br>3 tests total, 2 passed, 1 failed               |
+| summary 	    | Post a report summary  	| **Report Summary - Suites**<br>Total Tests : 9<br>Total Passed : 8<br>Total Failed : 1  |  
+| end_test     	| Post failing tests 	| **Sample Testcase**<br>No keyword with name 'Log To C' found. Did you mean: <br>BuiltIn.Log To Console 	|
+| end_test_all 	| Post all tests     	| **Sample Testcase**  |
 
 ## Use as library
 
