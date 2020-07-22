@@ -29,11 +29,10 @@ Seperate the arguments with a semicolon ;
 
 | Argument     	| Description        	| Example                                                                                                           	|
 |--------------	|--------------------	|-------------------------------------------------------------------------------------------------------------------	|
-| end_suite    	| Post suite results 	| ![Examples1](https://github.com/tlolkema/RobotNotifications/blob/master/examples_endsuite.png?raw=true)              |
-| summary 	    | Post a report summary | ![Examples2](https://github.com/tlolkema/RobotNotifications/blob/master/examples_summary.png?raw=true)  
-| end_test     	| Post failing tests 	| ![Examples3](https://github.com/tlolkema/RobotNotifications/blob/master/examples_endtest.png?raw=true) 	|
-| end_test_all 	| Post all tests     	| ![Examples4](https://github.com/tlolkema/RobotNotifications/blob/master/examples_endtestall.png?raw=true)  |
-
+| end_suite    	| Post suite results 	| <img src="https://github.com/tlolkema/RobotNotifications/blob/master/examples_endsuite.png?raw=true" width="341"/>     |
+| summary 	    | Post a report summary | <img src="https://github.com/tlolkema/RobotNotifications/blob/master/examples_summary.png?raw=true" width="341"/>  
+| end_test     	| Post failing tests 	| <img src="https://github.com/tlolkema/RobotNotifications/blob/master/examples_end_test.png?raw=true" width="341"/> 	|
+| end_test_all 	| Post all tests     	| <img src="https://github.com/tlolkema/RobotNotifications/blob/master/examples_end_test_all.png?raw=true" width="341"/>  |
 
 ## Use as library
 
