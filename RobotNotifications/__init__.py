@@ -15,7 +15,7 @@ class RobotNotifications:
     POST a message to a Slack or Mattermost channel.
     '''
     ROBOT_LIBRARY_SCOPE = 'GLOBAL'
-    ROBOT_LIBRARY_VERSION = '1.1.1'
+    ROBOT_LIBRARY_VERSION = '1.1.2'
     ROBOT_LISTENER_API_VERSION = 3
 
     def __init__(self, webhook, *args):       
@@ -25,7 +25,7 @@ class RobotNotifications:
 
     def _clean_data(self, text, data):
         '''Validates the given arguments and creates a JSON string'''
-        allowed_params = ('channel', 'username', 'icon_url', 'icon_emoji', 'props')
+        allowed_params = ('channel', 'username', 'icon_url', 'icon_emoji', 'props', 'attachments')
         json_data = {}
         json_data['text'] = text
         for key, value in data.items():
@@ -52,35 +52,64 @@ class RobotNotifications:
             raise Exception(err)
         else:
             print(response.text)
+    
+    def _get_attachments(self, status, text):
+        '''Return a formatted attachment list'''
+        attachments = {
+            "color": '#dcdcdc',
+            "text": '',
+            "footer": 'RobotNotifications'
+        }
+        if status == 'GREEN':
+            attachments['color'] = '#36a64f'
+        elif status == 'RED':
+            attachments['color'] = '#dc143c'
+        attachments['text'] = text
+        attachment_list = [attachments]
+        return attachment_list
 
     def end_suite(self, data, result):
         '''Post the suite results to Slack or Mattermost'''        
         if 'end_suite' in self.args:
-            suite_message = (
-                f'*{result.longname}*\n'
-                f'{result.full_message}'
-            )
-            self.post_message_to_channel(suite_message, icon_emoji=':robot_face:')
+            text = f'*{result.longname}*\n'
+            if result.status == 'PASS':
+                attachments_data = self._get_attachments('GREEN', result.full_message)
+            else:
+                attachments_data = self._get_attachments('RED', result.full_message)
+            self.post_message_to_channel(text, attachments=attachments_data)
         
         if 'summary' in self.args:
             if not result.parent:
-                suite_message = (
-                    f'*Report Summary - {result.longname}* ({result.status})\n\n'
-                    f'*Total Tests : * {result.statistics.all.total}\n'
-                    f'*Total Passed : * {result.statistics.all.passed}\n'
-                    f'*Total Failed : * {result.statistics.all.failed}'
+                text = f'*Report Summary - {result.longname}*'  
+                attachment_text = (
+                    f'Total Tests : {result.statistics.all.total}\n'
+                    f'Total Passed : {result.statistics.all.passed}\n'
+                    f'Total Failed : {result.statistics.all.failed}'
                 )
-                self.post_message_to_channel(suite_message, icon_emoji=':robot_face:')
+                if result.statistics.all.failed == 0:
+                    attachments_data = self._get_attachments('GREEN', attachment_text)
+                elif result.statistics.all.failed > 0:
+                    attachments_data = self._get_attachments('RED', attachment_text)
+                self.post_message_to_channel(text, attachments=attachments_data)
 
     def end_test(self, data, result):
         '''Post individual test results to Slack or Mattermost'''
-        test_message = (
-            f'*{result.name}* ({result.status})\n'
-            f'{result.message}'
-        )
-        if 'end_test' in self.args:
-            if not result.passed:
-                self.post_message_to_channel(test_message, icon_emoji=':rage:')
+        if result.passed:
+            attachment_text = (
+                f'*{result.name}*\n'
+                f'{result.message}'
+            )
+            attachments_data = self._get_attachments('GREEN', attachment_text)
+        
+        if not result.passed:
+            attachment_text = (
+                f'*{result.name}*\n'
+                f'{result.message}'
+            )
+            attachments_data = self._get_attachments('RED', attachment_text)
+        
+        if 'end_test' in self.args and not result.passed:
+            self.post_message_to_channel('', attachments=attachments_data)
         
         if 'end_test_all' in self.args:
-            self.post_message_to_channel(test_message, icon_emoji=':robot_face:')
+            self.post_message_to_channel('', attachments=attachments_data)
