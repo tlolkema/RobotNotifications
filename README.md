@@ -29,10 +29,11 @@ Seperate the arguments with a semicolon ;
 
 | Argument     	| Description        	| Example                                                                                                           	|
 |--------------	|--------------------	|-------------------------------------------------------------------------------------------------------------------	|
-| end_suite    	| Post suite results 	| **Suites.Suite 1**<br>3 critical tests, 2 passed, 1 failed<br>3 tests total, 2 passed, 1 failed               |
-| summary 	    | Post a report summary  	| **Report Summary - Suites**<br>Total Tests : 9<br>Total Passed : 8<br>Total Failed : 1  |  
-| end_test     	| Post failing tests 	| **Sample Testcase**<br>No keyword with name 'Log To C' found. Did you mean: <br>BuiltIn.Log To Console 	|
-| end_test_all 	| Post all tests     	| **Sample Testcase**  |
+| end_suite    	| Post suite results 	| ![Examples1](https://github.com/tlolkema/RobotNotifications/blob/master/examples_endsuite.png?raw=true)              |
+| summary 	    | Post a report summary | ![Examples2](https://github.com/tlolkema/RobotNotifications/blob/master/examples_summary.png?raw=true)  
+| end_test     	| Post failing tests 	| ![Examples3](https://github.com/tlolkema/RobotNotifications/blob/master/examples_endtest.png?raw=true) 	|
+| end_test_all 	| Post all tests     	| ![Examples4](https://github.com/tlolkema/RobotNotifications/blob/master/examples_endtestall.png?raw=true)  |
+
 
 ## Use as library
 
