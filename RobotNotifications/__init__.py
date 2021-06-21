@@ -15,7 +15,7 @@ class RobotNotifications:
     POST a message to a Slack or Mattermost channel.
     '''
     ROBOT_LIBRARY_SCOPE = 'GLOBAL'
-    ROBOT_LIBRARY_VERSION = '1.1.3'
+    ROBOT_LIBRARY_VERSION = '1.2.0'
     ROBOT_LISTENER_API_VERSION = 3
 
     def __init__(self, webhook, *args):       
@@ -35,6 +35,15 @@ class RobotNotifications:
                 raise ValueError('Invalid Parameter')
         return json.dumps(json_data)
 
+    def _return_statistics(self, statistics):
+        '''Returns the base path where the summary statistics are stored
+        This path is different between robotframework versions'''
+        try:
+            if statistics.total:
+                return statistics                   # robotframework < 4.0.0
+        except: 
+            return statistics.all                   # robotframework > 4.0.0
+        
     @keyword('Post Message To Channel')
     def post_message_to_channel(self, text, **kwargs):
         '''POST a custom message to a Slack or Mattermost channel.'''
@@ -70,6 +79,9 @@ class RobotNotifications:
 
     def end_suite(self, data, result):
         '''Post the suite results to Slack or Mattermost'''        
+        
+        statistics = self._return_statistics(result.statistics)
+        
         if 'end_suite' in self.args:
             if result.parent:
                 text = f'*{result.longname}*\n'
@@ -83,13 +95,13 @@ class RobotNotifications:
             if not result.parent:
                 text = f'*Report Summary - {result.longname}*'  
                 attachment_text = (
-                    f'Total Tests : {result.statistics.all.total}\n'
-                    f'Total Passed : {result.statistics.all.passed}\n'
-                    f'Total Failed : {result.statistics.all.failed}'
+                    f'Total Tests : {statistics.total}\n'
+                    f'Total Passed : {statistics.passed}\n'
+                    f'Total Failed : {statistics.failed}'
                 )
-                if result.statistics.all.failed == 0:
+                if statistics.failed == 0:
                     attachments_data = self._get_attachments('GREEN', attachment_text)
-                elif result.statistics.all.failed > 0:
+                elif statistics.failed > 0:
                     attachments_data = self._get_attachments('RED', attachment_text)
                 self.post_message_to_channel(text, attachments=attachments_data)
 
