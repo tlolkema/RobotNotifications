@@ -1,5 +1,6 @@
 # RobotNotifications
 
+> **WARNING**: Make sure you have atleast robotframework-notifications version 1.2.0 when using robotframework 4+
 
 Send notifications to Slack or Mattermost using Robot Framework.
 Can be used both as library or listener.
